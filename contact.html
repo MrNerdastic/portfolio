@@ -54,26 +54,35 @@
             <h1 class="h2">03 : Contact me</h1>
             </div>
             <div class="col-md-10 col-md-offset-1">
+                <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+                <script>
+                    (function () {
+                        emailjs.init("TThluFbw4cjXW2XRo"); // Replace with your EmailJS user ID
+                    })();
+                </script>
+
                 <form id="contactForm">
                     <input type="text" name="name" placeholder="Your Name" required />
                     <input type="email" name="email" placeholder="Your Email" required />
                     <textarea name="message" placeholder="Your Message" required></textarea>
                     <button type="submit">Send</button>
                 </form>
+
                 <script>
                     const form = document.getElementById("contactForm");
-                    form.addEventListener("submit", async (event) => {
+                    form.addEventListener("submit", (event) => {
                         event.preventDefault();
-                        const formData = new FormData(form);
-                        const payload = Object.fromEntries(formData.entries());
 
-                        const response = await fetch("/api/sendEmail", {
-                            method: "POST",
-                            headers: { "Content-Type": "application/json" },
-                            body: JSON.stringify(payload),
-                        });
-                        const result = await response.json();
-                        alert(result.message);
+                        const serviceID = "service_p4s5v7k"; // Replace with your EmailJS service ID
+                        const templateID = "template_ie3lvpq"; // Replace with your EmailJS template ID
+
+                        emailjs.sendForm(serviceID, templateID, form)
+                            .then(() => {
+                                alert("Email sent successfully!");
+                            })
+                            .catch((error) => {
+                                alert("Failed to send email. Error: " + error.text);
+                            });
                     });
                 </script>
 
