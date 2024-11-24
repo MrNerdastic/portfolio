@@ -54,37 +54,39 @@
             <h1 class="h2">03 : Contact me</h1>
             </div>
             <div class="col-md-10 col-md-offset-1">
-                <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
-                <script>
-                    (function () {
-                        emailjs.init("TThluFbw4cjXW2XRo"); // Replace with your EmailJS user ID
-                    })();
-                </script>
+                <form id="contactForm" style="max-width: 600px; margin: auto;">
+                    <label for="name">Name:</label><br>
+                    <input type="text" id="name" required="" style="width: 100%; padding: 10px; margin-bottom: 10px;"><br>
 
-                <form id="contactForm">
-                    <input type="text" name="name" placeholder="Your Name" required />
-                    <input type="email" name="email" placeholder="Your Email" required />
-                    <textarea name="message" placeholder="Your Message" required></textarea>
-                    <button type="submit">Send</button>
+                    <label for="email">Email:</label><br>
+                    <input type="email" id="email" required="" style="width: 100%; padding: 10px; margin-bottom: 10px;"><br>
+
+                    <label for="message">Message:</label><br>
+                    <textarea id="message" required="" style="width: 100%; padding: 10px; height: 150px; margin-bottom: 10px;"></textarea><br>
+
+                    <button type="submit" style="padding: 10px 20px; background-color: #000; color: white; border: none; border-radius: 5px; cursor: pointer;">
+                        Send
+                    </button>
                 </form>
 
                 <script>
-                    const form = document.getElementById("contactForm");
-                    form.addEventListener("submit", (event) => {
-                        event.preventDefault();
+                    document.getElementById("contactForm").addEventListener("submit", function (event) {
+                        event.preventDefault(); // Prevent the default form submission
 
-                        const serviceID = "service_p4s5v7k"; // Replace with your EmailJS service ID
-                        const templateID = "template_ie3lvpq"; // Replace with your EmailJS template ID
+                        // Get form values
+                        const name = encodeURIComponent(document.getElementById("name").value);
+                        const email = encodeURIComponent(document.getElementById("email").value);
+                        const message = encodeURIComponent(document.getElementById("message").value);
 
-                        emailjs.sendForm(serviceID, templateID, form)
-                            .then(() => {
-                                alert("Email sent successfully!");
-                            })
-                            .catch((error) => {
-                                alert("Failed to send email. Error: " + error.text);
-                            });
+                        // Construct the mailto link
+                        const mailtoLink = `mailto:mrnerdastic@gmail.com?subject=Contact from ${name}&body=Name: ${name}%0AEmail: ${email}%0AMessage: ${message}`;
+
+                        // Open the mailto link
+                        window.location.href = mailtoLink;
                     });
                 </script>
+
+
 
 
             </div>
